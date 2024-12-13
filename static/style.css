@@ -1,0 +1,299 @@
+/* 全域樣式 */
+body {
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    padding: 20px;
+    margin: 0;
+    background-color: #ffffff;
+    background-image: url('/static/sea.jpg'); /* 背景圖片的路徑 */
+    background-size: cover; /* 圖片覆蓋整個背景 */
+}
+
+.header-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
+}
+
+/* 上方白色區域 */
+.top-section {
+    width: 30%; /* 區域寬度，可自行調整 */
+    height: 100px; /* 區域高度，可自行調整 */
+    background-color: white; /* 白色背景 */
+    margin: 20px auto; /* 上下距離20px，左右自動置中 */
+    box-sizing: border-box; /* 確保內外邊距不影響總尺寸 */
+    padding: 10px; /* 內邊距，讓內容不貼邊 */
+    text-align: center; /* 文本水平居中 */
+    border: 1px solid #ccc; /* 簡單邊框 */
+    border-radius: 15px; /* 圓角，半徑為 15px，可自行調整 */
+}
+
+
+/* 標題樣式 */
+.top-section h1{
+    font-size: 4em; /* 標題大小 */
+    font-weight: bold; /* 字體加粗 */
+    color: #333; /* 字體顏色 */
+    margin: 0; /* 去掉標題的外邊距 */
+}
+
+/* 副標題（可選） */
+.top-section p {
+    font-size: 1em; /* 副標題字體大小 */
+    color: #666; /* 字體顏色 */
+    margin-top: 10px; /* 與標題的距離 */
+}
+
+
+/* 下方白色區域 */
+.bottom-section {
+    width: 50%; /* 區域寬度，可自行調整 */
+    height: 100px; /* 區域高度，可自行調整 */
+    background-color: white; /* 白色背景 */
+    margin: 20px auto; /* 上下距離20px，左右自動置中 */
+    box-sizing: border-box; /* 確保內外邊距不影響總尺寸 */
+    padding: 10px; /* 內邊距，讓內容不貼邊 */
+    text-align: center; /* 文本水平居中 */
+    border: 1px solid #ccc; /* 簡單邊框 */
+    border-radius: 15px; /* 圓角，半徑為 15px，可自行調整 */
+}
+
+/* 主容器 */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    margin: 20px auto; /* 上下距離20px，左右自動置中 */
+    gap: 20px;
+}
+
+/* 左側日曆區域 */
+.calendar {
+    width: 60%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar h2 {
+    text-align: center;
+    margin: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* 右側事件區域 */
+.tasks {
+    width: 40%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.tasks h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #0080FF;
+    color: white;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.complete-button {
+    padding: 10px 20px;
+    background-color: #297ce1; /* 藍色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px; /* 增加按鈕間距 */
+}
+
+.complete-button:hover {
+    background-color: #2c0ed2; /* 深藍 */
+}
+
+/* 隱藏表單的樣式 */
+.task-form {
+    display: none;
+}
+
+.show-form .task-form {
+    display: block;
+}
+
+
+
+/* 進度條樣式 */
+.progress-container {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    height: 20px;
+    position: relative;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    background: linear-gradient(to right, #2260a7, #58a1e8);
+    height: 100%;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+}
+
+
+.progress-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.task-item a {
+    flex: 1;
+}
+
+.progress-container {
+    flex: 1;
+    margin-left: 10px;
+}
+
+
+.bottom-section {
+    width: 75%;
+    height: auto;
+    background-color: white;
+    margin: 20px auto;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-size: 18px;
+}
+.refresh-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.refresh-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* 任務優先級指示器 */
+.priority-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.priority-3 {
+    background-color: #ff4d4d;  /* 重要 - 紅色 */
+}
+
+.priority-2 {
+    background-color: #ffd700;  /* 次要 - 黃色 */
+}
+
+.priority-1 {
+    background-color: #90EE90;  /* 普通 - 綠色 */
+}
+
+/* 任務項目樣式 */
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+
+.task-content {
+    flex-grow: 1;
+}
+
+/* 優先級區塊樣式 */
+.priority-section {
+    margin-bottom: 20px;
+}
+
+.priority-heading {
+    margin: 15px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eee;
+}
+
+/* 進度條樣式 */
+.progress-container {
+    margin-top: 5px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+}

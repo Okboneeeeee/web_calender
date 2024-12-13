@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任務詳細資料</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="top-section">
+        <h1>Calendar</h1>
+    </div>
+    
+    <div class="container">
+        <!-- 左側：日曆區域 -->
+        <div class="calendar">
+            <div class="calendar-header">
+                <button onclick="changeMonth(-1)">&#60;</button>
+                <h2 id="month-year"></h2>
+                <button onclick="changeMonth(1)">&#62;</button>
+            </div>
+            <table class="calendar-table" id="calendar-table">
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 右側：任務詳細資料 -->
+        <div class="tasks">
+            <h2>任務: {{ task_name }}</h2>
+            <h3>子任務</h3>
+            <ul>
+                {% for subtask in subtasks %}
+                    <li>
+                        {{ subtask['name'] }}
+                        {% if not subtask['completed'] %}
+                            <button class="complete-button" onclick="markAsComplete('{{ subtask['id'] }}')">完成</button>
+                        {% else %}
+                            <span> </span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul><hr>
+
+           <!-- 新增天氣預報區域 -->
+           <h3>天氣預報：{{ location }}</h3>
+           <div class="weather-forecast">
+               {% if weather_data and not weather_data.get('error') %}
+                   <ul>
+                       <li>溫度：{{ weather_data['最低溫度 (MinT)'] }}~{{ weather_data['最高溫度 (MaxT)'] }}°C</li>
+                       <li>天氣現象：{{ weather_data['天氣現象 (Wx)'] }}</li>
+                       <li>12小時降雨機率：{{ weather_data['12小時降雨機率 (PoP12h)'] }}%</li>
+                   </ul>
+               {% else %}
+                   <p>無法取得天氣預報：{{ weather_data.get('error', '未知錯誤') }}</p>
+               {% endif %}
+           </div>
+
+            <a href="{{ url_for('tasks_on_date', date=selected_date, _external=True) }}">返回任務列表</a>
+        </div>
+        
+        <script>
+            function markAsComplete(subtaskId) {
+                fetch(`/complete_subtask/${subtaskId}`, { method: 'POST' })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload(); // 任務完成後重新載入頁面
+                        } else {
+                            alert("更新失敗！");
+                        }
+                    });
+            }
+        </script>               
+    </div>
+
+    <!-- 引入月曆腳本 -->
+    <script src="/static/calendar.js"></script>
+    <script>
+        // 初始化月曆，與其他頁面保持一致
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        const calendarTable = document.getElementById("calendar-table");
+        const monthYear = document.getElementById("month-year");
+
+        function updateCalendar() {
+            calendarTable.innerHTML = "";
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const startDay = firstDay.getDay();
+            let row = calendarTable.insertRow();
+            for (let i = 0; i < startDay; i++) {
+                row.insertCell();
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                if (row.cells.length === 7) {
+                    row = calendarTable.insertRow();
+                }
+                const cell = row.insertCell();
+                cell.textContent = day;
+
+                // 點擊日期時跳轉並更新 URL（功能可擴展）
+                cell.onclick = () => {
+                    const selected = new Date(currentYear, currentMonth, day);
+                    const year = selected.getFullYear();
+                    const month = String(selected.getMonth() + 1).padStart(2, "0");
+                    const date = String(selected.getDate()).padStart(2, "0");
+                    const formattedDate = `${year}-${month}-${date}`;
+                    window.location.href = `/tasks_on_date?date=${formattedDate}`;
+                };
+            }
+            monthYear.textContent = `${firstDay.toLocaleString("default", { month: "long" })} ${currentYear}`;
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar();
+        }
+
+        updateCalendar();
+    </script>
+</body>
+</html>
